@@ -1,29 +1,23 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.7;
 
-contract ErrorHandling {
-   
-    // uint public num = 0;
-    uint b=5;
+contract ErrorHandlingExample {
+    uint public value;
 
-    function testAssert(uint num) public pure{
-        assert(num!=0);
+    function setValue(uint _value) public {
+        require(_value > 0, "Value must be greater than zero");
+        value = _value;
     }
 
-    function divide(uint _numerator, uint _denomenator) public pure returns (uint){
-        if(_numerator<_denomenator){
-           
-            revert("please provide numerator greater than denomenator");
-            
+    function incrementValue(uint _increment) public {
+        value += _increment;
+        assert(value > 0);
+    }
+
+    function decrementValue(uint _decrement) public {
+        if (_decrement > value) {
+            revert("Decrement value exceeds current value");
         }
-        return _numerator/_denomenator;
-       
-
+        value -= _decrement;
     }
-    function mult(uint a) public view returns (uint){
-        require(a>0,"Value of a is zero , we don't want the result to be zero");
-        return a*b;
-
-    }
-
 }
